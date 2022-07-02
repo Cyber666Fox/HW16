@@ -20,7 +20,7 @@ def users ():
         return jsonify(res)
     if request.method == 'POST':
         try:
-            new_user = json.loads(request.data)
+            user = json.loads(request.data)
             new_user_obj = User (
                 id = user['id'],
                 first_name = user['first_name'],
@@ -79,7 +79,7 @@ def orders ():
         return jsonify(res)
     if request.method == 'POST':
         try:
-            new_order = json.loads(request.data)
+            order = json.loads(request.data)
             month_start, day_start, year_start = order['start_date'].split("/")
             month_end, day_end, year_end = order['end_date'].split("/")
             new_order_obj = Order(
@@ -118,7 +118,7 @@ def one_order (order_id):
         order.name = order_data['name']
         order.description = order_data['description']
         order.start_date = datetime.date(year=year_start, month=month_start, day=day_start),
-        order.end_date = datetime.date(year=year_start, month=month_start, day=day_start),
+        order.end_date = datetime.date(year=year_end, month=month_end, day=day_end),
         order.address = order_data['address']
         order.price = order_data['price']
         order.customer_id = order_data['customer_id']
@@ -145,7 +145,7 @@ def offers ():
         return jsonify(res)
     if request.method == 'POST':
         try:
-            new_offer = json.loads(request.data)
+            offer = json.loads(request.data)
             new_offer_obj = Offer (
                 id = offer['id'],
                 order_id = offer['order_id'],
@@ -186,6 +186,6 @@ def one_offer (offer_id):
         db.session.close()
         return f'Обьект с id {offer_id} успешно удален', 200
 
-if __name__ == '__name__':
+if __name__ == '__main__':
     
     app.run()
